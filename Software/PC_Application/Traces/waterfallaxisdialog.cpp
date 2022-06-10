@@ -169,6 +169,7 @@ std::set<YAxis::Type> WaterfallAxisDialog::supportedYAxis(XAxis::Type type)
             ret.insert(YAxis::Type::Real);
             ret.insert(YAxis::Type::Imaginary);
             ret.insert(YAxis::Type::SeriesR);
+            ret.insert(YAxis::Type::AbsZ);
             ret.insert(YAxis::Type::Reactance);
             ret.insert(YAxis::Type::Capacitance);
             ret.insert(YAxis::Type::Inductance);

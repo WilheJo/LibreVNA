@@ -447,6 +447,7 @@ bool TraceWaterfall::supported(Trace *t)
         return false;
     case YAxis::Type::VSWR:
     case YAxis::Type::SeriesR:
+    case YAxis::Type::AbsZ:
     case YAxis::Type::Reactance:
     case YAxis::Type::Capacitance:
     case YAxis::Type::Inductance:

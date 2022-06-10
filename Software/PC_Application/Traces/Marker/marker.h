@@ -31,6 +31,7 @@ public:
         Impedance,
         VSWR,
         SeriesR,
+        AbsZ,
         Capacitance,
         Inductance,
         QualityFactor,

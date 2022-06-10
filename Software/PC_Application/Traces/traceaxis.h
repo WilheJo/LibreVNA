@@ -70,6 +70,7 @@ public:
         Imaginary,
         // derived parameter options
         SeriesR,
+        AbsZ,
         Reactance,
         Capacitance,
         Inductance,

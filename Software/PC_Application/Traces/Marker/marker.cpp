@@ -116,6 +116,7 @@ QString Marker::formatToString(Marker::Format f)
     case Format::Impedance: return "Impedance";
     case Format::VSWR: return "VSWR";
     case Format::SeriesR: return "Resistance";
+    case Format::AbsZ: return "|Z|";
     case Format::Capacitance: return "Capacitance";
     case Format::Inductance: return "Inductance";
     case Format::QualityFactor: return "Quality Factor";
@@ -194,6 +195,7 @@ std::vector<Marker::Format> Marker::applicableFormats()
                     ret.push_back(Format::Impedance);
                     ret.push_back(Format::VSWR);
                     ret.push_back(Format::SeriesR);
+                    ret.push_back(Format::AbsZ);
                     ret.push_back(Format::Capacitance);
                     ret.push_back(Format::Inductance);
                     ret.push_back(Format::QualityFactor);
@@ -242,6 +244,7 @@ std::vector<Marker::Format> Marker::applicableFormats()
                     ret.push_back(Format::Impedance);
                     ret.push_back(Format::VSWR);
                     ret.push_back(Format::SeriesR);
+                    ret.push_back(Format::AbsZ);
                     ret.push_back(Format::Capacitance);
                     ret.push_back(Format::Inductance);
                     ret.push_back(Format::QualityFactor);
@@ -345,6 +348,7 @@ QString Marker::readableData(Format f)
                 return "Δ:"+Unit::ToString(impedance.real() - delta_impedance.real(), "Ω", "m k", 5) + "+"+Unit::ToString(impedance.imag() - delta_impedance.imag(), "Ω", "m k", 5)+"j";
             }
             case Format::SeriesR: return "Δ:"+Unit::ToString(Util::SparamToResistance(data, trace()->getReferenceImpedance()) - Util::SparamToResistance(delta->data, trace()->getReferenceImpedance()), "Ω", "m kM", 4);
+            case Format::AbsZ: return "Δ:"+Unit::ToString(std::abs(Util::SparamToImpedance(data, trace()->getReferenceImpedance())) - std::abs(Util::SparamToImpedance(delta->data, trace()->getReferenceImpedance())), "Ω", "m kM", 4);
             case Format::Capacitance: return "Δ:"+Unit::ToString(Util::SparamToCapacitance(data, position, trace()->getReferenceImpedance()) - Util::SparamToCapacitance(delta->data, delta->position, trace()->getReferenceImpedance()), "F", "pnum ", 4);
             case Format::Inductance: return "Δ:"+Unit::ToString(Util::SparamToInductance(data, position, trace()->getReferenceImpedance()) - Util::SparamToInductance(delta->data, delta->position, trace()->getReferenceImpedance()), "H", "pnum ", 4);
             case Format::QualityFactor: return "ΔQ:" + Unit::ToString(Util::SparamToQualityFactor(data) - Util::SparamToQualityFactor(delta->data), "", " ", 3);
@@ -369,6 +373,7 @@ QString Marker::readableData(Format f)
                 }
                 break;
             case Format::SeriesR: return Unit::ToString(Util::SparamToResistance(data, trace()->getReferenceImpedance()), "Ω", "m kM", 4);
+            case Format::AbsZ: return Unit::ToString(std::abs(Util::SparamToImpedance(data, trace()->getReferenceImpedance())), "Ω", "m kM", 4);
             case Format::Capacitance: return Unit::ToString(Util::SparamToCapacitance(data, position, trace()->getReferenceImpedance()), "F", "pnum ", 4);
             case Format::Inductance: return Unit::ToString(Util::SparamToInductance(data, position, trace()->getReferenceImpedance()), "H", "pnum ", 4);
             case Format::QualityFactor: return "Q:" + Unit::ToString(Util::SparamToQualityFactor(data), "", " ", 3);

@@ -110,6 +110,8 @@ double YAxis::sampleToCoordinate(Trace::Data data, Trace *t, unsigned int sample
         return data.y.imag();
     case YAxis::Type::SeriesR:
         return Util::SparamToResistance(data.y, t->getReferenceImpedance());
+    case YAxis::Type::AbsZ:
+        return std::abs(Util::SparamToImpedance(data.y, t->getReferenceImpedance()));
     case YAxis::Type::Reactance:
         return Util::SparamToImpedance(data.y, t->getReferenceImpedance()).imag();
     case YAxis::Type::Capacitance:
@@ -202,6 +204,7 @@ QString YAxis::TypeToName(Type type)
     case Type::Real: return "Real";
     case Type::Imaginary: return "Imaginary";
     case Type::SeriesR: return "Resistance";
+    case Type::AbsZ: return "|Z|";
     case Type::Reactance: return "Reactance";
     case Type::Capacitance: return "Capacitance";
     case Type::Inductance: return "Inductance";
@@ -248,6 +251,7 @@ QString YAxis::Unit(Type type, TraceModel::DataSource source)
         case Type::QualityFactor:
             return "";
         case Type::SeriesR: return "Ω";
+        case Type::AbsZ: return "Ω";
         case Type::Reactance: return "Ω";
         case Type::Capacitance: return "F";
         case Type::Inductance: return "H";
@@ -282,6 +286,7 @@ QString YAxis::Prefixes(Type type, TraceModel::DataSource source)
         case Type::Imaginary: return "pnum ";
         case Type::QualityFactor: return " ";
         case Type::SeriesR: return "m kM";
+        case Type::AbsZ: return "m kM";
         case Type::Reactance: return "m kM";
         case Type::Capacitance: return "pnum ";
         case Type::Inductance: return "pnum ";
@@ -332,6 +337,7 @@ std::set<YAxis::Type> YAxis::getSupported(XAxis::Type type, TraceModel::DataSour
             ret.insert(YAxis::Type::Real);
             ret.insert(YAxis::Type::Imaginary);
             ret.insert(YAxis::Type::SeriesR);
+            ret.insert(YAxis::Type::AbsZ);
             ret.insert(YAxis::Type::Reactance);
             ret.insert(YAxis::Type::Capacitance);
             ret.insert(YAxis::Type::Inductance);
